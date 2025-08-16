@@ -22,8 +22,8 @@ const Marker = dynamic(
   { ssr: false }
 );
 
-import UserSidebar from '@/components/UserSidebar';
-import UserNavbar from '@/components/UserNavbar';
+import UserSidebar from '@/components/layouts/UserSidebar';
+import UserNavbar from '@/components/layouts/UserNavbar';
 
 // Utility formatting
 const formatNumber = (n: number) => n.toLocaleString('en-US');

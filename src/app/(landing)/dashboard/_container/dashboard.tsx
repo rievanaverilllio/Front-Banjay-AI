@@ -1,78 +1,29 @@
 "use client";
 
-import Footer from '@/components/footer';
-import Navbar from '@/components/navbar';
-
+import Footer from '@/components/layouts/footer';
+import Navbar from '@/components/layouts/navbar';
 import { motion } from 'framer-motion';
 import { useLenisSmoothScroll } from '@/lib/useLenisSmoothScroll';
 import { useInView } from 'react-intersection-observer';
-import { ArrowRight, ArrowUpRight, ChevronRight, ChevronLeft } from 'lucide-react';
-import { useRef, useState, useEffect } from 'react';
-import { useRouter } from 'next/navigation';
+import { useRef } from 'react';
+import type React from 'react';
+import Hero from '@/components/ui/landing/Hero';
+import Achievements from '@/components/ui/landing/Achievements';
+import SectionHeading from '@/components/ui/landing/SectionHeading';
+import ProcessCarousel, { type ProcessStep } from '@/components/ui/landing/ProcessCarousel';
+import PricingGrid, { type PricingPlan } from '@/components/ui/landing/PricingGrid';
+import AnimatedArrowsCTA from '@/components/ui/landing/AnimatedArrowsCTA';
 
 export default function LandingPage() {
   useLenisSmoothScroll();
-  const router = useRouter();
-  const arrowCount = 5;
 
-  // Data for team members (kept generic, focusing on team expertise)
-  const teamMembers = [
-    { id: 1, src: "afin1.jpg" },
-    { id: 2, src: "rievan1.png" },
-    { id: 3, src: "afin1.jpg" },
-    { id: 4, src: "rievan1.png" },
-  ];
-
-  // Duplicate team members to create a seamless loop effect
-  const duplicatedTeamMembers = [...teamMembers, ...teamMembers, ...teamMembers];
-
-  // Animation variants for infinite horizontal scrolling
-  const scrollVariants = {
-    animate: {
-      x: [0, -(teamMembers.length / duplicatedTeamMembers.length) * 100 + '%'],
-      transition: {
-        repeat: Infinity, // Repeat indefinitely
-        repeatType: "loop" as const, // Loop from the beginning after completion
-        duration: 30, // Animation duration (adjust for speed)
-        ease: "linear" as const, // Constant speed
-      },
-    },
-  };
+  // Animation variants shared
 
   // Data for new service items (adapted to the flood project)
-  const serviceItems = [
-    {
-      id: 1,
-      title: "AI & LLM Model Development",
-      description: "Building artificial intelligence and Large Language Models for comprehensive flood data analysis and accurate predictions.",
-      tags: ["Machine Learning", "Deep Learning", "Natural Language Processing", "Flood Prediction"],
-      image: "llm_development.jpeg"
-    },
-    {
-      id: 2,
-      title: "Himawari Satellite Image Analysis",
-      description: "Processing and analyzing Himawari BMKG satellite imagery to detect changes in water levels and cloud conditions relevant to floods.",
-      tags: ["Satellite Imagery", "BMKG", "GIS", "Change Detection"],
-      image: "satelit.jpeg"
-    },
-    {
-      id: 3,
-      title: "Multi-Source Data Integration",
-      description: "Combining historical flood data, verified journals, and surrounding environmental data for a holistic understanding.",
-      tags: ["Historical Data", "Scientific Journals", "Environmental Data", "Big Data"],
-      image: "Data_Integration.jpeg"
-    },
-    {
-      id: 4,
-      title: "Early Flood Warning System",
-      description: "Designing and implementing an efficient early warning system for risk mitigation and rapid response to potential floods.",
-      tags: ["Early Warning", "Disaster Mitigation", "Rapid Response", "Information System"],
-      image: "flood.jpeg"
-    },
-  ];
+  // NOTE: serviceItems UI not present currently as a section; keep data for future extraction if needed.
 
   // Data for process steps, now with image properties (adapted to the AI project)
-  const processSteps = [
+  const processSteps: ProcessStep[] = [
     {
       id: 1,
       title: "Data Collection & Briefing",
@@ -111,34 +62,10 @@ export default function LandingPage() {
     },
   ];
 
-  // Ref for the container that limits dragging
-  const constraintsRef = useRef<HTMLDivElement | null>(null);
-  // State to store the width of the drag constraints, initialized to 0
-  const [dragConstraintsWidth, setDragConstraintsWidth] = useState<number>(0);
-
-  // Calculate drag constraints after component renders and when window size changes
-  useEffect(() => {
-    const calculateConstraints = () => {
-      if (constraintsRef.current) {
-        // Total draggable content width minus visible area width
-        // This ensures cards cannot be dragged too far from the start or end
-        if (constraintsRef.current) {
-          setDragConstraintsWidth(constraintsRef.current.scrollWidth - constraintsRef.current.offsetWidth);
-        }
-      }
-    };
-
-    // Only calculate after the component has mounted on the client
-    calculateConstraints();
-    window.addEventListener('resize', calculateConstraints); // Recalculate when window size changes
-
-    return () => {
-      window.removeEventListener('resize', calculateConstraints); // Clean up event listener
-    };
-  }, [processSteps.length]); // Recalculate if number of steps changes (though unlikely here)
+  // Removed local drag constraints logic; handled inside ProcessCarousel component.
 
 
-  const pricingPlans = [
+  const pricingPlans: PricingPlan[] = [
     {
       name: "Basic Package",
       price: "$5,000",
@@ -255,253 +182,70 @@ export default function LandingPage() {
         contactRef={contactRef}
       />
 
-      {/* Main Content Section */}
-      <main ref={homeRef} className="bg-[url('/flood1.jpg')] bg-cover bg-center bg-no-repeat flex-grow flex flex-col justify-end pt-24 pb-8 px-8 lg:px-20 min-h-screen">
-        <motion.div
-          ref={mainRef}
-          initial="hidden"
-          animate={mainInView ? "visible" : "hidden"}
-          variants={staggerContainer}
-          className="max-w-7xl mx-auto w-full"
-        >
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-end">
-            <div className="text-left mb-4 lg:mb-0">
-              <motion.h1 variants={fadeInFromBottom} className="text-3xl sm:text-4xl lg:text-5xl font-extrabold leading-tight tracking-tight">
-                AI for Early Flood Monitoring: <br /> Banjay
-              </motion.h1>
-            </div>
-            <div className="space-y-8 lg:text-right">
-              <motion.p variants={fadeInFromBottom} className="text-sm sm:text-base text-gray-300 leading-relaxed max-w-lg lg:ml-auto">
-                This project aims to develop AI with LLM for early flood monitoring based on Himawari BMKG satellite imagery, various verified journals, historical flood data, and surrounding environmental data collected during sampling.
-              </motion.p>
-              <motion.div variants={fadeInFromBottom} className="flex flex-col sm:flex-row lg:justify-end space-y-3 sm:space-y-0 sm:space-x-3">
-                <button onClick={() => router.push('/login')} className="px-6 py-3 bg-black border border-black text-white rounded-full text-base font-medium hover:bg-gray-800 transition-colors">
-                  TRY OUR DEMO
-                </button>
-              </motion.div>
-            </div>
-          </div>
-        </motion.div>
-      </main>
+      {/* Hero */}
+      <section ref={homeRef}>
+        <div ref={mainRef as unknown as React.RefObject<HTMLDivElement>}>
+          <Hero
+            inView={mainInView}
+            variants={{ container: staggerContainer, item: fadeInFromBottom }}
+            backgroundUrl={'/flood1.jpg'}
+            title={<><span>AI for Early Flood Monitoring: </span><br />Banjay</>}
+            description={"This project aims to develop AI with LLM for early flood monitoring based on Himawari BMKG satellite imagery, various verified journals, historical flood data, and surrounding environmental data collected during sampling."}
+          />
+        </div>
+      </section>
 
       {/* Achievement Section */}
-      <section ref={projectsRef} className="bg-[#FAFAF5] text-black py-6 px-2 lg:px-12 min-h-screen flex items-center">
-        <motion.div
-          ref={achievementRef}
-          initial="hidden"
-          animate={achievementInView ? "visible" : "hidden"}
-          variants={staggerContainer}
-          className="max-w-7xl mx-auto w-full"
-        >
-          <motion.p variants={fadeInFromBottom} className="text-sm uppercase tracking-widest text-gray-500 mb-4">• PROJECT HIGHLIGHTS</motion.p>
-          <motion.h2 variants={fadeInFromBottom} className="text-2xl sm:text-3xl lg:text-4xl font-light leading-snug max-w-4xl mb-16">
-            As a data-driven team, we let the numbers <br /> speak for us
-          </motion.h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
-            <motion.div variants={fadeInFromBottom}>
-              <p className="text-5xl font-semibold">95%+</p>
-              <hr className="my-4 border-gray-300" />
-              <p className="font-semibold mb-1">Prediction Accuracy</p>
-              <p className="text-gray-600">
-                Our AI model achieves high accuracy in predicting potential floods.
-              </p>
-            </motion.div>
-            <motion.div variants={fadeInFromBottom}>
-              <p className="text-5xl font-semibold">5+</p>
-              <hr className="my-4 border-gray-300" />
-              <p className="font-semibold mb-1">Integrated Data Sources</p>
-              <p className="text-gray-600">
-                Combining satellite imagery, historical data, journals, and environmental sensors.
-              </p>
-            </motion.div>
-            <motion.div variants={fadeInFromBottom}>
-              <p className="text-5xl font-semibold">10x</p>
-              <hr className="my-4 border-gray-300" />
-              <p className="font-semibold mb-1">Improved Early Response</p>
-              <p className="text-gray-600">
-                Enabling faster early warnings for disaster mitigation.
-              </p>
-            </motion.div>
-          </div>
-        </motion.div>
+      <section ref={projectsRef}>
+        <div ref={achievementRef as unknown as React.RefObject<HTMLDivElement>}>
+          <Achievements
+            inView={achievementInView}
+            variants={{ container: staggerContainer, item: fadeInFromBottom }}
+            items={[
+              { value: '95%+', title: 'Prediction Accuracy', description: 'Our AI model achieves high accuracy in predicting potential floods.' },
+              { value: '5+', title: 'Integrated Data Sources', description: 'Combining satellite imagery, historical data, journals, and environmental sensors.' },
+              { value: '10x', title: 'Improved Early Response', description: 'Enabling faster early warnings for disaster mitigation.' },
+            ]}
+          />
+        </div>
       </section>
 
       {/* Arrow Motion Section */}
-      <section className="bg-[#FAFAF5] flex justify-center items-center overflow-hidden min-h-[30vh]">
-        <div className="flex items-center space-x-8 lg:space-x-12">
-          {/* LEFT arrows */}
-          {[...Array(arrowCount)].map((_, i) => (
-            <motion.div
-              key={`left-${i}`}
-              animate={{ opacity: [0.2, 0.6, 1, 0.6, 0.2], x: [0, 15, 0] }}
-              transition={{
-                repeat: Infinity,
-                duration: 1.5,
-                ease: 'easeInOut',
-                delay: i * 0.15,
-              }}
-              className={`text-8xl font-bold ${i % 2 === 0 ? 'text-black' : 'text-gray-400'}`}
-            >
-              <ChevronRight size={96} />
-            </motion.div>
-          ))}
-
-          {/* TRY OUR DEMO Button with modern animation */}
-          <motion.button
-            whileHover={{ scale: 1.05, backgroundColor: '#f0f0f0', borderColor: '#000000' }}
-            transition={{ duration: 0.2 }}
-            onClick={() => router.push('/login')}
-            className="flex items-center justify-between px-6 py-3 bg-white text-black rounded-full text-base font-medium border border-gray-300 shadow-sm transition-all duration-200"
-            style={{ width: '250px', height: '56px' }}
-          >
-            TRY OUR DEMO
-            <motion.div
-              className="ml-4 bg-black rounded-full p-2 flex items-center justify-center"
-              whileHover={{ x: 5, y: -5, rotate: 15, backgroundColor: '#333333' }}
-              transition={{ duration: 0.2 }}
-            >
-              <ArrowUpRight className="w-5 h-5 text-white" />
-            </motion.div>
-          </motion.button>
-
-          {/* RIGHT arrows */}
-          {[...Array(arrowCount)].map((_, i) => (
-            <motion.div
-              key={`right-${i}`}
-              animate={{ opacity: [0.2, 0.6, 1, 0.6, 0.2], x: [0, -15, 0] }}
-              transition={{
-                repeat: Infinity,
-                duration: 1.5,
-                ease: 'easeInOut',
-                delay: i * 0.15,
-              }}
-              className={`text-8xl font-bold ${i % 2 === 0 ? 'text-black' : 'text-gray-400'}`}
-            >
-              <ChevronLeft size={96} />
-            </motion.div>
-          ))}
-        </div>
-      </section>
+  <AnimatedArrowsCTA />
 
       {/* Process Section - Title and Description */}
       <section ref={processRef} className="bg-[#FAFAF5] text-black py-16 px-4 lg:px-12 flex flex-col items-center justify-center text-center">
-        <motion.div
-          ref={processSectionRef}
-          initial="hidden"
-          animate={processSectionInView ? "visible" : "hidden"}
-          variants={staggerContainer}
-          className="max-w-4xl mx-auto w-full"
-        >
-          <motion.p variants={fadeInFromBottom} className="text-sm uppercase tracking-widest text-gray-500 mb-4">• HOW WE WORK</motion.p>
-          <motion.h2 variants={fadeInFromBottom} className="text-5xl sm:text-6xl lg:text-7xl font-light leading-tight mb-8">
-            Process
-          </motion.h2>
-          <motion.p variants={fadeInFromBottom} className="text-xl sm:text-2xl lg:text-3xl font-light leading-relaxed text-gray-800">
-            To ensure seamless and effortless flood monitoring, we have established a simple and efficient process that will help us get started on the Judul Banjay project as quickly as possible.
-          </motion.p>
-        </motion.div>
-      </section>
-
-      {/* Process Content Cards Section - Draggable */}
-      <section className="bg-[#FAFAF5] text-black py-16">
-        <motion.div
-          ref={processCardsContainerRef} // New ref for the container
-          initial="hidden"
-          animate={processCardsContainerInView ? "visible" : "hidden"}
-          // Removed staggerContainer from here to apply to individual cards
-          className="relative w-full overflow-hidden cursor-grab px-4 lg:px-12"
-        >
-          <motion.div
-            ref={constraintsRef} // Use constraintsRef here
-            className="flex gap-8 py-4"
-            drag="x"
-            // Conditionally apply dragConstraints only if dragConstraintsWidth is a valid number
-            {...(typeof dragConstraintsWidth === 'number' && { dragConstraints: { left: -dragConstraintsWidth, right: 0 } })}
-            whileTap={{ cursor: "grabbing" }}
-          >
-            {processSteps.map((step, index) => (
-              <motion.div
-                key={step.id}
-                initial="hidden" // Each card starts hidden
-                animate={processCardsContainerInView ? "visible" : "hidden"} // Animates when container is in view
-                variants={fadeInFromBottom} // Apply fade-in-from-bottom animation
-                transition={{ delay: index * 0.15 }} // Stagger animation for each card
-                className="flex-shrink-0 w-80 bg-white rounded-lg shadow-lg border border-gray-200 overflow-hidden"
-              >
-                {/* Image for process card */}
-                <img
-                  src={step.image}
-                  alt={step.title}
-                  className="w-full h-48 object-cover"
-                />
-                <div className="p-8 text-left">
-                  <div className="flex items-center justify-center w-12 h-12 rounded-full border border-gray-300 text-gray-600 text-lg font-bold mb-4">
-                    {step.id}
-                  </div>
-                  <h3 className="text-2xl font-semibold text-black mb-2">{step.title}</h3>
-                  <p className="text-base text-gray-700">{step.description}</p>
-                </div>
-              </motion.div>
-            ))}
-          </motion.div>
-        </motion.div>
-      </section>
-
-      {/* Pricing Section */}
-      <section ref={pricingRef} className="bg-[#FAFAF5] text-black py-16 px-4 lg:px-12 flex flex-col items-center justify-center min-h-screen">
-        <motion.div
-          ref={pricingSectionRef}
-          initial="hidden"
-          animate={pricingSectionInView ? "visible" : "hidden"}
-          variants={staggerContainer}
-          className="max-w-7xl mx-auto w-full text-center mb-16"
-        >
-          <motion.p variants={fadeInFromBottom} className="text-sm uppercase tracking-widest text-gray-500 mb-4">• Pricing</motion.p>
-          <motion.h2 variants={fadeInFromBottom} className="text-5xl sm:text-6xl lg:text-7xl font-light leading-tight mb-8">
-            Project Packages
-          </motion.h2>
-        </motion.div>
-        <div className="max-w-7xl mx-auto w-full grid grid-cols-1 md:grid-cols-3 gap-8">
-          {pricingPlans.map((plan, index) => (
-            <motion.div
-              key={index}
-              initial="hidden"
-              animate={pricingSectionInView ? "visible" : "hidden"}
-              variants={fadeInFromBottom}
-              transition={{ delay: index * 0.15 }} // Stagger animation for each plan
-              className={`rounded-lg shadow-lg p-8 flex flex-col ${plan.isDark ? 'bg-black text-white' : 'bg-white text-black border border-gray-200'}`}
-            >
-              <div className="flex justify-between items-center mb-4">
-                <h3 className="text-3xl font-semibold">{plan.name}</h3>
-                {plan.icon && <div className={`${plan.isDark ? 'text-white' : 'text-black'}`}>{plan.icon}</div>}
-              </div>
-              <hr className={`mb-4 ${plan.isDark ? 'border-gray-700' : 'border-gray-300'}`} />
-              <p className="text-4xl font-bold mb-2">
-                {plan.price}<span className="text-xl font-medium">{plan.period}</span>
-              </p>
-              <p className={`mb-6 text-sm ${plan.isDark ? 'text-gray-300' : 'text-gray-700'}`}>
-                {plan.description}
-              </p>
-              <button className={`flex items-center justify-center px-6 py-3 rounded-full text-base font-medium transition-colors ${plan.isDark ? 'bg-white text-black hover:bg-gray-200' : 'bg-black text-white hover:bg-gray-800'}`}>
-                Start Project
-                <ArrowRight className="ml-2 w-4 h-4" />
-              </button>
-              <ul className="mt-8 space-y-3">
-                {plan.features.map((feature, featureIndex) => (
-                  <li key={featureIndex} className="flex items-center text-sm">
-                    <svg className={`w-4 h-4 mr-2 ${plan.isDark ? 'text-white' : 'text-black'}`} fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7"></path>
-                    </svg>
-                    {feature}
-                  </li>
-                ))}
-              </ul>
-            </motion.div>
-          ))}
+        <div ref={processSectionRef as unknown as React.RefObject<HTMLDivElement>} className="max-w-4xl mx-auto w-full">
+          <SectionHeading
+            inView={processSectionInView}
+            variants={{ container: staggerContainer, item: fadeInFromBottom }}
+            eyebrow="• HOW WE WORK"
+            title="Process"
+            subtitle="To ensure seamless and effortless flood monitoring, we have established a simple and efficient process that will help us get started on the Judul Banjay project as quickly as possible."
+          />
         </div>
       </section>
 
-      {/* Footer Section */}
+      {/* Process Content Cards Section - Draggable */}
+      <section ref={processCardsContainerRef as unknown as React.RefObject<HTMLElement>}>
+        <ProcessCarousel steps={processSteps} inView={processCardsContainerInView} variants={{ item: fadeInFromBottom }} />
+      </section>
+
+      {/* Pricing Section */}
+      <section ref={pricingRef}>
+        <div ref={pricingSectionRef as unknown as React.RefObject<HTMLDivElement>} className="bg-[#FAFAF5] text-black py-16 px-4 lg:px-12 flex flex-col items-center justify-center">
+          <SectionHeading
+            inView={pricingSectionInView}
+            variants={{ container: staggerContainer, item: fadeInFromBottom }}
+            eyebrow="• Pricing"
+            title="Project Packages"
+            align="center"
+          />
+        </div>
+        <PricingGrid plans={pricingPlans} inView={pricingSectionInView} variants={{ container: staggerContainer, item: fadeInFromBottom }} />
+      </section>
+
+  {/* Footer Section */}
       <Footer
         contactRef={contactRef}
         footerRef={footerRef}

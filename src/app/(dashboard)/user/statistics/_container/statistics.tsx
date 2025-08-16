@@ -2,8 +2,8 @@
 
 import React, { useEffect, useMemo, useState } from 'react';
 import dynamic from 'next/dynamic';
-import UserSidebar from '@/components/UserSidebar';
-import UserNavbar from '@/components/UserNavbar';
+import UserSidebar from '@/components/layouts/UserSidebar';
+import UserNavbar from '@/components/layouts/UserNavbar';
 import {
   BarChart3, Activity, MapPin, Users, AlertTriangle, RefreshCw, Calendar,
   LineChart, Layers, Globe2, Filter, ThermometerSun, Waves, CloudRain, Zap,

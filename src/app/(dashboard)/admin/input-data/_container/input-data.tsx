@@ -1,8 +1,8 @@
 "use client";
 
 import React, { useState } from 'react';
-import AdminSidebar from '@/components/AdminSidebar';
-import AdminNavbar from '@/components/AdminNavbar';
+import AdminSidebar from '@/components/layouts/AdminSidebar';
+import AdminNavbar from '@/components/layouts/AdminNavbar';
 
 export default function AdminInputData() {
 	const [isSidebarOpen, setIsSidebarOpen] = useState(true);

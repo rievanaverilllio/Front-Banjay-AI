@@ -1,8 +1,8 @@
 "use client";
 
 import React, { useMemo, useRef, useState } from 'react';
-import UserSidebar from '@/components/UserSidebar';
-import UserNavbar from '@/components/UserNavbar';
+import UserSidebar from '@/components/layouts/UserSidebar';
+import UserNavbar from '@/components/layouts/UserNavbar';
 import { File, FileText, Download, Trash2, Search, Filter, Upload, Tag, X, ExternalLink, Star, StarOff, CheckSquare, Square, ChevronDown, RefreshCw, Folder, Copy } from 'lucide-react';
 
 type DocType = 'pdf' | 'image' | 'csv' | 'txt' | 'other';

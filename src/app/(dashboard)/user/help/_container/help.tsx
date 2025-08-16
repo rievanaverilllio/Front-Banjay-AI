@@ -1,8 +1,8 @@
 "use client";
 
 import React, { useMemo, useState } from 'react';
-import UserSidebar from '@/components/UserSidebar';
-import UserNavbar from '@/components/UserNavbar';
+import UserSidebar from '@/components/layouts/UserSidebar';
+import UserNavbar from '@/components/layouts/UserNavbar';
 import { HelpCircle, Search, BookOpen, MessageSquare, LifeBuoy, Mail, ChevronDown, ChevronRight, ExternalLink, Loader2, CheckCircle2, FileQuestion, Phone } from 'lucide-react';
 
 interface FaqItem { id:string; q:string; a:string; category:string; }

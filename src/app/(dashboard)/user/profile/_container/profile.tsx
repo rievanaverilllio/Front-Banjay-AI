@@ -1,8 +1,8 @@
 "use client";
 
 import React, { useRef, useState } from 'react';
-import UserSidebar from '@/components/UserSidebar';
-import UserNavbar from '@/components/UserNavbar';
+import UserSidebar from '@/components/layouts/UserSidebar';
+import UserNavbar from '@/components/layouts/UserNavbar';
 import { User, Mail, Shield, Activity, Award, Edit2, Loader2, CheckCircle2, Upload, Settings, Clock, MapPin, Globe, Bell } from 'lucide-react';
 
 interface ActivityItem { id:string; ts:string; label:string; }

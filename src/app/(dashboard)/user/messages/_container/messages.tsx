@@ -1,8 +1,8 @@
 "use client";
 
 import React, { useEffect, useMemo, useRef, useState } from 'react';
-import UserSidebar from '@/components/UserSidebar';
-import UserNavbar from '@/components/UserNavbar';
+import UserSidebar from '@/components/layouts/UserSidebar';
+import UserNavbar from '@/components/layouts/UserNavbar';
 import { MessageSquare, Search, Star, StarOff, Send, Plus, Filter, Paperclip, MoreHorizontal, Circle, CheckCircle2 } from 'lucide-react';
 
 interface Message {

@@ -1,8 +1,8 @@
 "use client";
 
 import React, { useMemo, useState } from 'react';
-import UserSidebar from '@/components/UserSidebar';
-import UserNavbar from '@/components/UserNavbar';
+import UserSidebar from '@/components/layouts/UserSidebar';
+import UserNavbar from '@/components/layouts/UserNavbar';
 import { User, Shield, Bell, Palette, Activity, Eye, EyeOff, CheckCircle2, Lock, Globe, Loader2 } from 'lucide-react';
 
 interface AuditItem { id:string; ts:string; action:string; ip:string; meta?:string; }

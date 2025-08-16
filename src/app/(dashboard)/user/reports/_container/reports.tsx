@@ -1,8 +1,8 @@
 "use client";
 
 import React, { useEffect, useMemo, useState } from 'react';
-import UserSidebar from '@/components/UserSidebar';
-import UserNavbar from '@/components/UserNavbar';
+import UserSidebar from '@/components/layouts/UserSidebar';
+import UserNavbar from '@/components/layouts/UserNavbar';
 import { FileText, Filter, RefreshCw, Download, Search, Clock, CheckCircle2, XCircle, AlertTriangle, BarChart2, Settings, Loader2, Plus, Tag, ExternalLink } from 'lucide-react';
 
 interface ReportMeta {

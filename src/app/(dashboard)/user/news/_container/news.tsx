@@ -1,7 +1,7 @@
 "use client";
 
-import UserSidebar from '@/components/UserSidebar';
-import UserNavbar from '@/components/UserNavbar';
+import UserSidebar from '@/components/layouts/UserSidebar';
+import UserNavbar from '@/components/layouts/UserNavbar';
 import { useState, useMemo, useEffect } from 'react';
 import { Search, Filter, Clock, Bookmark, Tag, Newspaper, Grid2X2, List, ArrowRight, RefreshCw, Flame } from 'lucide-react';
 

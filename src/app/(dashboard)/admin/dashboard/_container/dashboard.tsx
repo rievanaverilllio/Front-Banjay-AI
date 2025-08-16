@@ -6,8 +6,8 @@ import dynamic from 'next/dynamic';
 // Import Leaflet CSS
 import 'leaflet/dist/leaflet.css';
 
-import AdminSidebar from '@/components/AdminSidebar';
-import AdminNavbar from '@/components/AdminNavbar';
+import AdminSidebar from '@/components/layouts/AdminSidebar';
+import AdminNavbar from '@/components/layouts/AdminNavbar';
 
 const MapContainer = dynamic(
 	() => import('react-leaflet').then(mod => mod.MapContainer),

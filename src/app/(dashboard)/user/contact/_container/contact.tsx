@@ -1,8 +1,8 @@
 "use client";
 
 import React, { useState } from 'react';
-import UserSidebar from '@/components/UserSidebar';
-import UserNavbar from '@/components/UserNavbar';
+import UserSidebar from '@/components/layouts/UserSidebar';
+import UserNavbar from '@/components/layouts/UserNavbar';
 import { Mail, Phone, MapPin, Send, Loader2, CheckCircle2, Building2, Clock, Globe, Linkedin, Twitter, MessageSquare, Users } from 'lucide-react';
 
 interface TeamMember { id:string; name:string; role:string; avatar?:string; focus:string; }

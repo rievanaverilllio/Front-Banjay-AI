@@ -1,11 +1,13 @@
 "use client";
 
-import Navbar from '@/components/navbar';
-import Footer from '@/components/footer';
+import Navbar from '@/components/layouts/navbar';
+import Footer from '@/components/layouts/footer';
 import { useRef } from 'react';
 import { motion } from 'framer-motion';
 import { useLenisSmoothScroll } from '@/lib/useLenisSmoothScroll';
 import { useInView } from 'react-intersection-observer';
+import SectionHeading from '@/components/ui/landing/SectionHeading';
+import ContactForm from '@/components/ui/landing/ContactForm';
 
 export default function ContactPage() {
   // Dummy refs for Navbar (not used for scrolling on this page)
@@ -50,33 +52,17 @@ export default function ContactPage() {
         variants={staggerContainer}
         className="flex-1 max-w-7xl mx-auto w-full px-4 pt-32 pb-16"
       >
-        <motion.h1 variants={fadeInFromBottom} className="text-5xl font-bold mb-2">Contact</motion.h1>
-        <motion.hr variants={fadeInFromBottom} className="border-gray-300 mb-8" />
-        <motion.div variants={staggerContainer} className="flex flex-col lg:flex-row gap-12">
+        <SectionHeading inView={mainContentInView} variants={{ container: staggerContainer, item: fadeInFromBottom }} eyebrow="• Contact" title="Get in touch" align="left" />
+        <motion.div variants={staggerContainer} className="flex flex-col lg:flex-row gap-12 mt-6">
           {/* Left: Intro */}
           <motion.div variants={fadeInFromBottom} className="flex-1">
-            <motion.p variants={fadeInFromBottom} className="text-2xl font-bold mb-2"><span className="font-extrabold">Have an idea?</span> <span className="font-normal text-lg align-middle">We're always looking for passionate clients and talented professionals to join us in creating impactful work. Whether you have a bold vision you want to bring to life or expertise to contribute, let's collaborate and make something great together.</span></motion.p>
+            <motion.p variants={fadeInFromBottom} className="text-2xl font-bold mb-2">
+              <span className="font-extrabold">Have an idea?</span>
+              <span className="font-normal text-lg align-middle"> We're always looking for passionate clients and talented professionals to join us in creating impactful work. Whether you have a bold vision you want to bring to life or expertise to contribute, let's collaborate and make something great together.</span>
+            </motion.p>
             <motion.div variants={fadeInFromBottom} className="mt-12">
               <p className="text-xs uppercase tracking-widest text-gray-500 mb-2">• Get in touch</p>
-              <form className="bg-white rounded-lg shadow p-6 w-full max-w-xl">
-                <div className="mb-4">
-                  <label className="block text-sm font-medium mb-1">Name*</label>
-                  <input type="text" className="w-full border-b border-gray-200 bg-transparent py-2 px-1 focus:outline-none" required />
-                </div>
-                <div className="mb-4">
-                  <label className="block text-sm font-medium mb-1">Email*</label>
-                  <input type="email" className="w-full border-b border-gray-200 bg-transparent py-2 px-1 focus:outline-none" required />
-                </div>
-                <div className="mb-4">
-                  <label className="block text-sm font-medium mb-1">Phone</label>
-                  <input type="tel" className="w-full border-b border-gray-200 bg-transparent py-2 px-1 focus:outline-none" />
-                </div>
-                <div className="mb-6">
-                  <label className="block text-sm font-medium mb-1">Message</label>
-                  <textarea className="w-full border-b border-gray-200 bg-transparent py-2 px-1 focus:outline-none" rows={3}></textarea>
-                </div>
-                <button type="submit" className="w-full py-2 rounded border border-gray-300 text-gray-400 font-semibold text-sm cursor-not-allowed bg-gray-50" disabled>SUBMIT</button>
-              </form>
+              <ContactForm />
             </motion.div>
           </motion.div>
           {/* Right: FAQ */}
